@@ -1,14 +1,18 @@
+import dotenv from 'dotenv'
+dotenv.config =({path: '/.env'})
 import express from "express";
 import { connection } from "./database/connection.js";
+import userRoute from "./src/middleware/modules/user/user.routes.js";
+import messageRoute from './src/middleware/modules/message/message.routes.js';
 const app = express();
 const port = 3000;
 app.use(express.json())
- connection()
+
+app.use("/api/vi/user", userRoute)
+app.use("/api/vi/message" , messageRoute)
+
+connection()
 app.get('/', (req, res) => {
-
-
-
-   
 
     res.json("mahmoud sakr")
     console.log("hellow from get");

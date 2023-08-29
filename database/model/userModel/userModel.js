@@ -17,14 +17,16 @@ const userSchema = new Schema ({
         type:String,
         required:true,
         minLength:[4,"password in too short"]
+
     },
     verified: {
 
-        type:Boolean
+        type:Boolean,
+        default:false
     }
 
 },{timestamps:true}
 )
 
 
-export const userModel = model(User , userSchema)
+export const userModel = model("User" , userSchema)
