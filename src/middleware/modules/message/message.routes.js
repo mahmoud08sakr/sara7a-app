@@ -35,7 +35,6 @@ messageRoute.get('/getAllMessages', auth, async (req, res) => {
 
 
     try {
-        console.log("avsj,bdkl");
         let allMessages = await messageModel.find({ recivedId: req.userId });
         res.json({ message: "All Messages", allMessages });
     } catch (error) {
