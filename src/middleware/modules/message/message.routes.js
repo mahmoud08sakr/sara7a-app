@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { messageModel } from "../../../../database/model/messageModel/messageModdel.js";
 import { userModel } from "../../../../database/model/userModel/userModel.js";
 import jwt from "jsonwebtoken"
+import { auth } from "../../auth.js";
 
 
 
@@ -30,21 +31,19 @@ messageRoute.post('/', async (req, res) => {
 
 
 
-messageRoute.get('/getAllMessages', async (req, res) => {
-    let token = req.header("token");
-    jwt.verify(token, 'sakr', async (err, decoded) => {
-        if (err) {
-            res.json({ message: "You need to log in first", err });
-        } else {
-            try {
-                let allMessages = await messageModel.find({ recivedId: decoded.id });
-                    res.json({ message: "All Messages", allMessages });
-            } catch (error) {
-                console.error(error);
-                res.status(500).json({ message: "An error occurred." });
-            }
-        }
-    });
-});
+messageRoute.get('/getAllMessages', auth, async (req, res) => {
+
+
+    try {
+        console.log("avsj,bdkl");
+        let allMessages = await messageModel.find({ recivedId: req.userId });
+        res.json({ message: "All Messages", allMessages });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "An error occurred." });
+    }
+}
+);
+
 
 export default messageRoute;

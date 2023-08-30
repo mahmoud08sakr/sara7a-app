@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-dotenv.config =({path: '/.env'})
+dotenv.config =([])
 import express from "express";
 import { connection } from "./database/connection.js";
 import userRoute from "./src/middleware/modules/user/user.routes.js";
