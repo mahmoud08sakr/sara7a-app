@@ -9,7 +9,6 @@ export const auth = (req, res, next) => {
         if (err) return res.json({ message: "token invalid", err })
 
         req.userId = decoded.id
-        // console.log("hello from auth");
         next()
 
     })

@@ -1,10 +1,30 @@
 import dotenv from 'dotenv'
 dotenv.config = ({})
-import { sendEmail } from '../../../email/sendEmail.js';
+import { sendEmail } from '../../email/sendEmail.js';
 
-import { userModel } from "../../../../database/model/userModel/userModel.js";
+import { userModel } from "../../../database/model/userModel/userModel.js";
 import bcrypt from "bcrypt"; // Add this line to import the bcrypt library
 import jwt from "jsonwebtoken";
+
+
+
+
+
+
+
+
+
+
+
+
+function handelasynkError(fn) {
+
+    return (req, res ,next ) => {
+        fn(req, res).catch(err => res.json({ message: "hellow from handel error", err }));
+    }
+
+}
+
 
 
 export const signIn = async (req, res) => {
@@ -38,9 +58,8 @@ export const signIn = async (req, res) => {
         res.status(500).json({ message: "An error occurred." });
     }
 };
-export const signUp = async (req, res) => {
+export const signUp = handelasynkError( async (req, res) => {
     let { name, email, password } = req.body;
-    try {
         let existUser = await userModel.findOne({ email });
         if (existUser) {
             res.json("user already exists");
@@ -55,10 +74,9 @@ export const signUp = async (req, res) => {
 
             res.json({ message: "user added " });
         }
-    } catch (err) {
         res.json({ error: "err", err });
-    }
-};
+    
+})
 export const verify = async (req, res) => {
     let { token } = req.params;
 
